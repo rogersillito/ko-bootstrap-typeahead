@@ -63,6 +63,17 @@ module.exports = (grunt) ->
           wrap:
             startFile: "dist/frag/start.js"
             endFile: "dist/frag/end.js"
+      prod:
+        options:
+          baseUrl: "dist/js/"
+          name: "../lib/almond"
+          include: ["bindingHandler"]
+          optimize: "none"
+          out: "dist/js/ko-bootstrap-typeahead.js"
+          stubModules: ["../lib/text"]
+          wrap:
+            startFile: "dist/frag/start.js"
+            endFile: "dist/frag/end.js"
 
     watch:
       options:
@@ -77,4 +88,5 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-requirejs"
 
   grunt.registerTask "dev", ["clean", "coffee:dev", "copy:dev", "copy:common"]
+  grunt.registerTask "build.dev", ["clean", "coffee:release", "copy:common", "copy:build", "requirejs:prod", "copy:release", "clean"]
   grunt.registerTask "default", ["clean", "coffee:release", "copy:common", "copy:build", "requirejs:build", "copy:release", "clean"]
