@@ -16,14 +16,19 @@ define \
 
         config = valueAccessor()
 
-        open = false
+        if ko.isObservable(config.isOpen)
+          open = config.isOpen
+        else
+          open = ko.observable()
+          
+        open(false)
 
         throttleTimeout = null
 
         disposer = ->
 
         openTypeAhead = ->
-          open = true
+          open(true)
 
           config.suggestion ""
 
@@ -32,16 +37,17 @@ define \
 
           disposer = closeHandler.create $parent.get(0), ->
             $dropdown.removeClass "open"
-            open = false
+            open(false)
+            false
 
           config.query $(element).val()
 
         onFocus = ->
-          if not open
+          if not open()
             openTypeAhead()
 
         onClick = ->
-          if not open
+          if not open()
             openTypeAhead()
 
         cancelEvent = (e) ->
@@ -62,14 +68,14 @@ define \
           cancelEvent e
           switch e.keyCode
             when constants.Keys.UP
-              if open 
+              if open() 
                 $selected = $ "li.selected", $parent
                 if $selected.length
                   $selected.removeClass("selected").prev("li").addClass("selected")
                 else
                   $("li", $parent).last().addClass "selected"
             when constants.Keys.DOWN
-              if open
+              if open()
                 $selected = $ "li.selected", $parent
                 if $selected.length
                   $selected.removeClass("selected").next("li").addClass("selected")
@@ -78,7 +84,7 @@ define \
               else
                 openTypeAhead()
             when constants.Keys.ENTER
-              if open
+              if open()
                 $selected = $ "li.selected > a", $parent
                 if $selected.length
                   data = ko.dataFor $selected.get 0
@@ -86,10 +92,10 @@ define \
                   $el.val data.name
                   disposer()
             when constants.Keys.ESC
-              if open
+              if open()
                 disposer()
             else
-              if not open
+              if not open()
                 openTypeAhead()
               clearTimeout throttleTimeout
               throttleTimeout = setTimeout (-> config.query $(element).val()), 200
