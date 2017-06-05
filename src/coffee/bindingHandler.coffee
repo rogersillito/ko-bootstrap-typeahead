@@ -72,14 +72,14 @@ define \
                 $selected = $ "li.selected", $parent
                 if $selected.length
                   $selected.removeClass("selected").prev("li").addClass("selected")
-                else
+                else if (ko.isObservable(config.suggestions) && config.suggestions().length)
                   $("li", $parent).last().addClass "selected"
             when constants.Keys.DOWN
               if open()
                 $selected = $ "li.selected", $parent
                 if $selected.length
                   $selected.removeClass("selected").next("li").addClass("selected")
-                else
+                else if (ko.isObservable(config.suggestions) && config.suggestions().length)
                   $("li", $parent).first().addClass "selected"
               else
                 openTypeAhead()
