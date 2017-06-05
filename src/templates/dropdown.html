@@ -1,11 +1,11 @@
 <div class="dropdown" data-bind="if: loading">
   <ul class="dropdown-menu" role="menu">
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Loading...</a></li>
+    <li role="presentation" class="disabled"><a role="menuitem" tabindex="-1" href="#" onclick="javascript: return false"><span class="fa fa-spinner" aria-hidden="true"></span> Loading...</a></li>
   </ul>
 </div>
 <div class="dropdown" data-bind="if: (suggestions().length == 0 &amp;&amp; !loading())">
   <ul class="dropdown-menu" role="menu">
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">No matches found...</a></li>
+    <li role="presentation" class="disabled"><a role="menuitem" tabindex="-1" href="#" onclick="javascript: return false">No matches found...</a></li>
   </ul>
 </div>
 <div id="menu" class="dropdown" data-bind="if: suggestions().length">
