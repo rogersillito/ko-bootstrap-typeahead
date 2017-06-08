@@ -37,6 +37,10 @@ module.exports = (grunt) ->
           { expand: true, flatten: true, cwd: "dist/", src: "js/ko-bootstrap-typeahead.js", dest: "example/lib" }
           { expand: true, cwd: "dist/", src: "css/ko-bootstrap-typeahead.css", dest: "example" }
         ]
+      deploy:
+        files: [
+          { expand: true, flatten: false, cwd: "release/js", src: "ko-bootstrap-typeahead.js", dest: "../../../../projects/kykloud/kykloud.Web/Scripts", verbose: true }
+        ]
       common:
         files: [
           { expand: true, flatten: true, cwd: "src/", src: "js/**.js", dest: "dist/js" }
@@ -88,5 +92,5 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-requirejs"
 
   grunt.registerTask "dev", ["clean", "coffee:dev", "copy:dev", "copy:common"]
-  grunt.registerTask "build.dev", ["clean", "coffee:release", "copy:common", "copy:build", "requirejs:prod", "copy:release", "clean"]
+  grunt.registerTask "build.dev", ["clean", "coffee:release", "copy:common", "copy:build", "requirejs:prod", "copy:release", "copy:deploy", "clean"]
   grunt.registerTask "default", ["clean", "coffee:release", "copy:common", "copy:build", "requirejs:build", "copy:release", "clean"]
