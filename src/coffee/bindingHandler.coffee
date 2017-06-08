@@ -63,6 +63,9 @@ define \
           switch e.keyCode
             when constants.Keys.ENTER
               e.preventDefault()
+            when constants.Keys.TAB
+              if open() 
+                disposer()
 
         onKeyUp = (e) ->
           cancelEvent e
@@ -94,6 +97,8 @@ define \
             when constants.Keys.ESC
               if open()
                 disposer()
+            when constants.Keys.TAB
+              true
             else
               if not open()
                 openTypeAhead()
